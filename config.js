@@ -1,7 +1,7 @@
 /* CONFIGURAÇÃO: preencha estes dois valores no painel do Supabase antes de publicar. */
 window.MARIA_SUPABASE_URL = 'https://ftcwlhtsmnyyxeujjtln.supabase.co';
 window.MARIA_SUPABASE_ANON_KEY = 'sb_publishable_7MUc2dLLUoPkCODuBXmOWA_6tBaWWDY';
-window.MARIA_WHATSAPP = '5587991359946';
+window.MARIA_WHATSAPP = '5587991352112';
 window.mariaSupabaseReady = function () {
   return window.MARIA_SUPABASE_URL.startsWith('https://') &&
     !window.MARIA_SUPABASE_URL.includes('COLE_AQUI') &&
