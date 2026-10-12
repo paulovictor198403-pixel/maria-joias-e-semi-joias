@@ -1,0 +1,64 @@
+MARIA JOIAS & SEMIJOIAS — PROJETO DE LOJA
+========================================
+
+O QUE ESTE projeto contém
+- Loja pública responsiva em preto, branco e dourado.
+- Catálogo de produtos vindo do Supabase.
+- Página separada Meu Carrinho.
+- Finalização de pedido pelo WhatsApp 5587991359946.
+- Painel administrativo com login do Supabase.
+- Cadastro, edição, exclusão e envio de fotos de produtos.
+- Banco de dados e armazenamento de fotos com políticas de acesso.
+
+IMPORTANTE
+Este pacote é o projeto do site, mas ele NÃO está publicado na internet ainda. Para o catálogo e painel funcionarem, você precisa configurar o Supabase e publicar os arquivos. Não coloque a chave service_role do Supabase em nenhum arquivo do site. Use somente a URL e a chave pública anon/publishable.
+
+PASSO 1 — Criar o banco de dados
+1. Entre em https://supabase.com e crie uma conta/projeto (o plano gratuito pode ser suficiente para começar).
+2. Abra o projeto e vá em SQL Editor.
+3. Escolha New query.
+4. Abra o arquivo supabase-setup.sql deste pacote, copie tudo e cole no SQL Editor.
+5. Clique em Run. Confirme que terminou sem erro.
+
+PASSO 2 — Criar o usuário administrador
+1. No Supabase, abra Authentication > Users e adicione um usuário com o seu e-mail e uma senha forte.
+2. Copie o UUID/ID desse usuário.
+3. Abra SQL Editor e execute o comando abaixo, substituindo COLE_O_UUID pelo ID do seu usuário:
+
+update auth.users
+set raw_app_meta_data = coalesce(raw_app_meta_data, '{}'::jsonb) || '{"role":"admin"}'::jsonb
+where id = 'COLE_O_UUID';
+
+4. Saia e entre novamente no painel para atualizar a sessão. Não compartilhe a senha.
+5. Em Authentication > Settings, desative novos cadastros públicos/sign ups se a opção estiver disponível. Crie administradores manualmente pelo painel do Supabase.
+
+PASSO 3 — Conectar o site ao Supabase
+1. No Supabase, abra Project Settings > API (ou Connect, conforme a versão do painel).
+2. Copie a Project URL e a chave pública anon/publishable. NUNCA use service_role/secret key no navegador.
+3. Abra config.js em um editor de texto.
+4. Troque COLE_AQUI_A_URL_DO_PROJETO_SUPABASE pela URL real.
+5. Troque COLE_AQUI_A_CHAVE_PUBLICA_ANON pela chave pública real.
+6. Salve o arquivo.
+
+PASSO 4 — Publicar na internet usando Vercel
+1. Crie uma conta em https://vercel.com.
+2. Crie uma conta no GitHub em https://github.com, se ainda não tiver.
+3. Crie um repositório novo no GitHub e envie todos os arquivos deste pacote para a raiz do repositório (index.html, carrinho.html, admin.html, config.js, app.js, cart.js, admin.js, styles.css, supabase-setup.sql e este arquivo).
+4. No Vercel, escolha Add New > Project e importe o repositório.
+5. Como é um site estático, deixe Build Command vazio e Output Directory como . (ponto), se solicitado. Clique Deploy.
+6. O Vercel mostrará o link público do projeto. Abra-o e teste a loja, o carrinho e /admin.html.
+
+PASSO 5 — Testar
+1. Entre no seu link público e abra /admin.html.
+2. Entre com o e-mail/senha do usuário criado no Supabase e autorizado com role=admin.
+3. Cadastre um produto de teste com foto e preço.
+4. Abra a página principal para confirmar que o produto aparece.
+5. Adicione ao carrinho e teste a montagem da mensagem do WhatsApp. Revise o pedido antes de enviar.
+
+OBSERVAÇÕES
+- Os produtos e fotos ficam no Supabase; o carrinho fica salvo no navegador do cliente.
+- O pedido é enviado pelo cliente ao WhatsApp; este projeto não processa pagamentos online.
+- A entrega e o pagamento são combinados diretamente pelo WhatsApp.
+- Para remover produtos, use o painel administrativo. A foto antiga que ficar sem referência pode ser removida manualmente em Storage > product-images.
+- O plano gratuito do Supabase/Vercel tem limites e as condições podem mudar.
+- Se uma tela do painel estiver diferente, consulte a documentação atual do provedor.
